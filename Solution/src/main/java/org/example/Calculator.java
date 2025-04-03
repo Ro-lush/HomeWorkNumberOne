@@ -31,17 +31,18 @@ public class Calculator {
         double a = getNumber(scanner, "первое");
         double b = getNumber(scanner, "второе");
         scanner.close();
-/*
         try {
             double result = calculate(operation, a, b);
+
             printResult(result);
         } catch (IllegalArgumentException e) {
             System.err.println("Ошибка: " + e.getMessage());
-        }*/
+        }
     }
 
     /**
      * Метод для ввода арифмитических операций и проверки его на валидность.
+     *
      * @param scanner
      * @return - возвращает арифмитическую операцию в String формате
      */
@@ -75,4 +76,25 @@ public class Calculator {
         return Double.parseDouble(number);
     }
 
+    private double calculate(String operation, double a, double b) {
+        switch (operation) {
+            case "+":
+                return a + b;
+            case "-":
+                return a - b;
+            case "*":
+                return a * b;
+            case "/":
+                if (b == 0) throw new IllegalArgumentException("Деление на ноль!");
+                return a / b;
+            case "^":
+                return Math.pow(a,b);
+            default:
+                throw new IllegalArgumentException("Неверная операция!");
+        }
+    }
+
+    private void printResult(double result) {
+        System.out.println("Результат: " + result);
+    }
 }
