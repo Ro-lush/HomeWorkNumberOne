@@ -1,7 +1,5 @@
 package org.example;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,7 +33,7 @@ public class Calculator {
         scanner.close();
         try {
             double result = calculate(operation, a, b);
-            writeFile(String.valueOf(result));
+
             printResult(result);
         } catch (IllegalArgumentException e) {
             System.err.println("Ошибка: " + e.getMessage());
@@ -98,20 +96,5 @@ public class Calculator {
 
     private void printResult(double result) {
         System.out.println("Результат: " + result);
-    }
-
-    /**
-     * Метод для записи результата вычисления в текстовый файл
-     * @param value - результат вычисления.
-     */
-    private void writeFile(String value){
-        try {
-            FileWriter writer = new FileWriter("history.txt",true);
-            writer.write(value + "\n");
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("Ошибка при записи в файл");
-            e.printStackTrace();
-        }
     }
 }
