@@ -1,5 +1,7 @@
 package org.example;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,17 +33,18 @@ public class Calculator {
         double a = getNumber(scanner, "первое");
         double b = getNumber(scanner, "второе");
         scanner.close();
-/*
         try {
             double result = calculate(operation, a, b);
+            writeFile(String.valueOf(result));
             printResult(result);
         } catch (IllegalArgumentException e) {
             System.err.println("Ошибка: " + e.getMessage());
-        }*/
+        }
     }
 
     /**
      * Метод для ввода арифмитических операций и проверки его на валидность.
+     *
      * @param scanner
      * @return - возвращает арифмитическую операцию в String формате
      */
@@ -75,4 +78,41 @@ public class Calculator {
         return Double.parseDouble(number);
     }
 
+    private double calculate(String operation, double a, double b) {
+        switch (operation) {
+            case "+":
+                return a + b;
+            case "-":
+                return a - b;
+            case "*":
+                return a * b;
+            case "/":
+                if (b == 0) throw new IllegalArgumentException("Деление на ноль!");
+                return a / b;
+            case "^":
+                return Math.pow(a, b);
+            default:
+                throw new IllegalArgumentException("Неверная операция!");
+        }
+    }
+
+    private void printResult(double result) {
+        System.out.println("Результат: " + result);
+    }
+
+    /**
+     * Метод для записи результата вычисления в текстовый файл
+     *
+     * @param value - результат вычисления.
+     */
+    private void writeFile(String value) {
+        try {
+            FileWriter writer = new FileWriter("history.txt", true);
+            writer.write(value + "\n");
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Ошибка при записи в файл");
+            e.printStackTrace();
+        }
+    }
 }
