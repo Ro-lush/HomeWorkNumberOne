@@ -1,33 +1,35 @@
 package org.example;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * Клас реализует выполнене базовые арифметические операции.
  */
-public  class Calculator {
-   final static String REGEX = "[^1234567890+-\\/^]";  //"[1234567890+-\\/^]";
-   final static String welcome = "Для вывода истории операции введите 'history', для отчистки итории введите 'clean'";
+public class Calculator {
+    final static String REGEX_OPERATION = "[^+-\\/^]";
+    final static String REGEX_NUMBER = "[^0-9]";
+
+    final static String welcome = "Для вывода истории операции введите 'history', для отчистки итории введите 'clean'";
 
     /**
      * Метод для проверки вводимых значений
+     *
      * @param symbol - введеные даные.
      * @return - true or false
      */
-    public boolean checkSymbol(String symbol){
-        if (Pattern.matches(REGEX,symbol)){
-            System.out.println("Присутсвуют символы отличающие от арифмитических операций и чисел, введите снова");
-        }
-        return Pattern.matches(REGEX,symbol);
+    private boolean checkSymbol(String symbol, String regex) {
+        final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
+        final Matcher matcher = pattern.matcher(symbol);
+        return matcher.find();
     }
 
     public void start() {
         Scanner scanner = new Scanner(System.in);
         String operation = getOperation(scanner);
-        System.out.println(operation);
-        /*double a = getNumber(scanner, "первое");
-        double b = getNumber(scanner, "второе");*/
+        double a = getNumber(scanner, "первое");
+        double b = getNumber(scanner, "второе");
         scanner.close();
 /*
         try {
@@ -38,20 +40,39 @@ public  class Calculator {
         }*/
     }
 
+    /**
+     * Метод для ввода арифмитических операций и проверки его на валидность.
+     * @param scanner
+     * @return - возвращает арифмитическую операцию в String формате
+     */
     private String getOperation(Scanner scanner) {
         String operation;
         System.out.println("Введите '+' для сложения, '-' для вычитания, '*' для умножения, '/' для деления, " +
                 "для возведения в степень '^' : ");
-
-      do {
-          operation = scanner.nextLine();
-      }while (!checkSymbol(operation));
+        operation = scanner.nextLine();
+        while (checkSymbol(operation, REGEX_OPERATION)) {
+            System.out.println("Присутсвуют символы отличающие от арифмитических операций, введите снова");
+            operation = scanner.nextLine();
+        }
         return operation;
     }
 
+    /**
+     * Метод для ввода числа и проверки его на валидность.
+     *
+     * @param scanner - сканер
+     * @param order   - порядковый номер числа
+     * @return - возвращает число в double формате
+     */
     private double getNumber(Scanner scanner, String order) {
+        String number;
         System.out.println("Введите " + order + " число:");
-        return scanner.nextDouble();
+        number = scanner.nextLine();
+        while (checkSymbol(number, REGEX_NUMBER)) {
+            System.out.println("Присутсвуют символы отличающие от чисел, введите снова");
+            number = scanner.nextLine();
+        }
+        return Double.parseDouble(number);
     }
 
 }
