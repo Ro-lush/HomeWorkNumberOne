@@ -1,0 +1,6 @@
+2025-04-06 23:10:41.825 [main] INFO  org.example.Calculator - Приложение запущено
+2025-04-06 23:10:49.206 [main] ERROR org.example.Calculator - Ошибка при вычислении
+java.lang.IllegalArgumentException: Деление на ноль!
+	at org.example.Calculator.calculate(Calculator.java:103) ~[classes/:?]
+	at org.example.Calculator.start(Calculator.java:45) [classes/:?]
+	at org.example.Main.main(Main.java:8) [classes/:?]
