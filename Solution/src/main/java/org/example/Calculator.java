@@ -1,5 +1,8 @@
 package org.example;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -12,6 +15,7 @@ import java.util.regex.Pattern;
  * Клас реализует выполнене базовые арифметические операции.
  */
 public class Calculator {
+    private static final Logger LOGGER = (Logger) LogManager.getLogger(Calculator.class);
     final static String REGEX_OPERATION = "[^*+-\\/^]";
     final static String REGEX_NUMBER = "[^0-9]";
 
@@ -31,6 +35,7 @@ public class Calculator {
     }
 
     public void start() throws IOException {
+        LOGGER.info("Приложение запущено");
         Scanner scanner = new Scanner(System.in);
         String operation = getOperation(scanner);
         double numberOne = getNumber(scanner, "первое");
@@ -41,7 +46,8 @@ public class Calculator {
             writeFile(String.valueOf(result));
             printResult(result);
         } catch (IllegalArgumentException e) {
-            System.err.println("Ошибка: " + e.getMessage());
+
+            LOGGER.error("Ошибка при вычислении", e);
         }
         System.out.println(END);
         endAction(scanner);
