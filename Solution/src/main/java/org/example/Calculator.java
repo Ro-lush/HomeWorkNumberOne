@@ -91,6 +91,14 @@ public class Calculator {
         return Double.parseDouble(number);
     }
 
+    /**
+     * Метод для вычисления
+     *
+     * @param operation - введенный оператор
+     * @param a         - первое число
+     * @param b         - второе число
+     * @return - возвращает итоговое значение
+     */
     private double calculate(String operation, double a, double b) {
         switch (operation) {
             case "+":
@@ -109,6 +117,11 @@ public class Calculator {
         }
     }
 
+    /**
+     * Выводит на печать результат
+     *
+     * @param result
+     */
     private void printResult(double result) {
         System.out.println("Результат: " + result);
     }
@@ -129,6 +142,11 @@ public class Calculator {
         }
     }
 
+    /**
+     * Метод для чтения истории из файла
+     * @param fileName - имя файла
+     * @throws IOException - исключение.
+     */
     private void readFile(String fileName) throws IOException {
         System.out.println("---------История---------");
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
@@ -139,6 +157,10 @@ public class Calculator {
         reader.close();
     }
 
+    /**
+     * Метод для очиски данных в файле( история)
+     * @param fileName - имя файла.
+     */
     private void clearFile(String fileName) {
         try {
             FileWriter writer = new FileWriter(fileName);
@@ -151,6 +173,11 @@ public class Calculator {
         System.out.println("История очищена");
     }
 
+    /**
+     * Метод для выбора действия после вычислений ( показать историю, очистить историю)
+     * @param s - ключ
+     * @throws IOException
+     */
     private void endAction(Scanner s) throws IOException {
         String value = s.nextLine();
         while (value.equals("h") && value.equals("c") && value.equals("e")) {
